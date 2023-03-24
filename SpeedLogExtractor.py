@@ -22,6 +22,11 @@ class myClass(tk.Frame):
         self.btns_frame = tk.Frame(parent)
         self.btns_frame.grid(row=2,column=1)
 
+        txt = 'Use the correct line\'s URL, otherwise you will get the wrong output!\nA cleaned log speed data table will be created wherever you specified the save location\n\nProgram by abdulwasay12@live.com'
+
+        self.label = tk.Label(parent,text=txt)
+        self.label.grid(row=0,column=1)
+
         #btns frame as 2,1
         b_malts = tk.Button(self.btns_frame, text='Extract Maltesers\' log speed', command = self.maltsExtractor)
         b_malts.grid(row=2, column=1,padx =10)
@@ -58,6 +63,7 @@ class myClass(tk.Frame):
         else:    
         # self.dataF.to_csv(f_pth,index=False,sep=',')
             self.dataF.to_excel(f_pth, index=False)
+            self.e.delete(0,tk.END)
             msg.showinfo(title='Maltesers',message='Maltesers log speed output saved. You may quit the program now.')
 
     def fourLineExtractor(self):
@@ -96,8 +102,9 @@ class myClass(tk.Frame):
         else:    
         # self.dataF.to_csv(f_pth,index=False,sep=',')
             finalized_table.to_excel(f_pth, index=False)
+            self.e.delete(0,tk.END)
             msg.showinfo(title='4Line',message='4Line log speed output saved. You may quit the program now.')
-        
+
     
 
 window = myClass(tk.Tk())
