@@ -53,14 +53,9 @@ class myClass(tk.Frame):
         self.dataF = self.dataF[1:] #headerless data
         self.dataF.columns = new_header
 
-        d = date.today().strftime('%d%b%y')
-        fname = d + '_Maltesers'
-        f_pth = fd.asksaveasfilename(initialfile=fname,defaultextension='xlsx',filetypes=[('Excel','*.xlsx')])
-  
         # self.dataF.to_csv(f_pth,index=False,sep=',')
-        self.dataF.to_excel(f_pth, index=False)
-        self.e.delete(0,tk.END)
-        msg.showinfo(title='Maltesers',message='Maltesers log speed output saved. You may quit the program now.')
+        self.dataF.to_clipboard(index=False,header=False)
+        msg.showinfo(title='Maltesers',message='Maltesers log speed output copied to clipboard.')
 
     def fourLineExtractor(self):
         self.valUrl = self.e.get()
@@ -85,18 +80,11 @@ class myClass(tk.Frame):
 
         d = pd.DataFrame(cleanData)
         df = pd.DataFrame(cleanData,columns =['Date','Start','Stop','Minutes','Actual Speed','Description','Steel Band','Flap Open','Bullnose Open','Product Sensor','x1','x2','x3'])
-        finalized_table = df.loc[:,'Date':'Product Sensor']
+        self.finalized_table = df.loc[:,'Date':'Product Sensor']
     
-        d = date.today().strftime('%d%b%y')
-        fname = d + '_4Line'
-        f_pth = fd.asksaveasfilename(initialfile=fname,defaultextension='xlsx',filetypes=[('Excel','*.xlsx')])
-
-    
-          
         # self.dataF.to_csv(f_pth,index=False,sep=',')
-        finalized_table.to_excel(f_pth, index=False)
-        self.e.delete(0,tk.END)
-        msg.showinfo(title='4Line',message='4Line log speed output saved. You may quit the program now.')
+        self.finalized_table.to_clipboard(index=False,header=False)
+        msg.showinfo(title='4Line',message='4Line log speed output copied to clipboard.')
 
     
 
