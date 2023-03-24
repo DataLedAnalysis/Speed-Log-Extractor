@@ -5,6 +5,7 @@ from datetime import date
 import sys
 from urllib.request import urlopen
 from bs4 import BeautifulSoup as bs
+from win32com.client import Dispatch
 
 #/home/abdul/Documents/Python/Speed-Log-Extractor/table.html
 
@@ -44,8 +45,7 @@ class myClass(tk.Frame):
         if not re.search("^https?:\/\/",self.valUrl):
             msg.showerror(message='Check URL again! Hint: must start with http',title='Invalid URL')
             self.e.delete(0,tk.END)
-            self.maltsExtractor
-       
+
         self.dataF = pd.read_html(self.valUrl)
         self.dataF = self.dataF[-1] #get last html table
 
@@ -56,15 +56,11 @@ class myClass(tk.Frame):
         d = date.today().strftime('%d%b%y')
         fname = d + '_Maltesers'
         f_pth = fd.asksaveasfilename(initialfile=fname,defaultextension='xlsx',filetypes=[('Excel','*.xlsx')])
-
-        if bool(f_pth) == False: #exit if quit is pressed
-            msg.showinfo(title='Quitting',message='You decided to quit this file dialog, exiting the program. \n\nNOTE: You need to re-run, if you want to reuse this program again.')
-            sys.exit()
-        else:    
+  
         # self.dataF.to_csv(f_pth,index=False,sep=',')
-            self.dataF.to_excel(f_pth, index=False)
-            self.e.delete(0,tk.END)
-            msg.showinfo(title='Maltesers',message='Maltesers log speed output saved. You may quit the program now.')
+        self.dataF.to_excel(f_pth, index=False)
+        self.e.delete(0,tk.END)
+        msg.showinfo(title='Maltesers',message='Maltesers log speed output saved. You may quit the program now.')
 
     def fourLineExtractor(self):
         self.valUrl = self.e.get()
@@ -72,8 +68,7 @@ class myClass(tk.Frame):
         if not re.search("^https?:\/\/",self.valUrl):
             msg.showerror(message='Check URL again! Hint: must start with http',title='Invalid URL')
             self.e.delete(0,tk.END)
-            self.fourLineExtractor
-        
+
         Fourline_html = urlopen(self.valUrl)
         soup = bs(Fourline_html)
 
@@ -96,14 +91,12 @@ class myClass(tk.Frame):
         fname = d + '_4Line'
         f_pth = fd.asksaveasfilename(initialfile=fname,defaultextension='xlsx',filetypes=[('Excel','*.xlsx')])
 
-        if bool(f_pth) == False: #exit if quit is pressed
-            msg.showinfo(title='Quitting',message='You decided to quit this file dialog, exiting the program. \n\nNOTE: You need to re-run, if you want to reuse this program again.')
-            sys.exit()
-        else:    
+    
+          
         # self.dataF.to_csv(f_pth,index=False,sep=',')
-            finalized_table.to_excel(f_pth, index=False)
-            self.e.delete(0,tk.END)
-            msg.showinfo(title='4Line',message='4Line log speed output saved. You may quit the program now.')
+        finalized_table.to_excel(f_pth, index=False)
+        self.e.delete(0,tk.END)
+        msg.showinfo(title='4Line',message='4Line log speed output saved. You may quit the program now.')
 
     
 
